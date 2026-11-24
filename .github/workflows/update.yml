@@ -1,0 +1,42 @@
+name: Update Douyin Download API for LazyCat
+run-name: ${{ (github.event_name == 'push' || inputs.dry-run) && 'Douyin API → LazyCat [仅检查]' || 'Douyin API → LazyCat [打包并送审]' }}
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/update.yml
+      - scripts/**
+      - tests/**
+      - lazycat-action.yml
+      - lzc-build.yml
+      - lzc-deploy-params.yml
+      - lzc-manifest.yml
+      - package.yml
+      - icon.png
+  schedule:
+    - cron: '23 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: 勾选＝仅检查；取消勾选＝转存镜像、构建 LPK 并提交审核。
+        type: boolean
+        default: true
+      retry-rejected:
+        description: 修复后重试已拒绝的源版本，须同时取消仅检查。
+        type: boolean
+        default: false
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  update:
+    uses: lazycat-adapter/lazycat-action/.github/workflows/lazycat.yml@v1
+    with:
+      config: lazycat-action.yml
+      operation: auto
+      runner: ubuntu-24.04
+      toolchains: docker
+      enable-qemu: false
+      dry-run: ${{ github.event_name == 'push' || inputs.dry-run || false }}
+      retry-rejected: ${{ github.event_name == 'workflow_dispatch' && inputs.retry-rejected || false }}
+    secrets: inherit

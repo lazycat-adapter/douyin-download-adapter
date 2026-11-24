@@ -1,0 +1,9 @@
+dist/
+.lazycat-action/
+*.lpk
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+icon-source.png

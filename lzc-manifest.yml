@@ -1,0 +1,75 @@
+usage: |
+  首次访问应用控制台时按页面提示完成管理员初始化；
+  数据持久保存在 /lzcapp/var/douyin；
+  升级时请保留安装参数中的主密钥、PostgreSQL 密码和 Redis 密码。
+application:
+  subdomain: dydownload
+  background_task: true
+  multi_instance: false
+  public_path:
+    - /api
+  routes:
+    - /=http://douyin:8000
+services:
+  douyin:
+    image: docker.io/evil0ctal/douyin_tiktok_download_api:5.1.13
+    command: [api]
+    environment:
+      - DTK_SECRET_KEY={{ .U.secret_key }}
+      - DTK_DATABASE_URL=postgresql+asyncpg://dtk:{{ .U.postgres_password }}@postgres:5432/dtk
+      - DTK_REDIS_URL=redis://:{{ .U.redis_password }}@redis:6379/0
+      - DTK_BIND_HOST=0.0.0.0
+      - DTK_BIND_PORT=8000
+      - DTK_CONSOLE_DIR=/app/web/dist
+      - DTK_BACKUP_DIR=/var/lib/dtk/backups
+      - DTK_MEDIA_DIR=/var/lib/dtk/media
+    binds:
+      - /lzcapp/var/douyin/backups:/var/lib/dtk/backups
+      - /lzcapp/var/douyin/media:/var/lib/dtk/media
+    depends_on:
+      - postgres
+      - redis
+      - migrate
+    healthcheck:
+      test: [CMD, python, -c, "import urllib.request; r=urllib.request.urlopen('http://127.0.0.1:8000/readyz', timeout=3); raise SystemExit(0 if r.status == 200 else 1)"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+  worker:
+    image: docker.io/evil0ctal/douyin_tiktok_download_api:5.1.13
+    command: [worker]
+    environment:
+      - DTK_SECRET_KEY={{ .U.secret_key }}
+      - DTK_DATABASE_URL=postgresql+asyncpg://dtk:{{ .U.postgres_password }}@postgres:5432/dtk
+      - DTK_REDIS_URL=redis://:{{ .U.redis_password }}@redis:6379/0
+      - DTK_MEDIA_DIR=/var/lib/dtk/media
+    binds:
+      - /lzcapp/var/douyin/media:/var/lib/dtk/media
+    depends_on:
+      - postgres
+      - redis
+      - migrate
+  migrate:
+    image: docker.io/evil0ctal/douyin_tiktok_download_api:5.1.13
+    command: [migrate]
+    environment:
+      - DTK_SECRET_KEY={{ .U.secret_key }}
+      - DTK_DATABASE_URL=postgresql+asyncpg://dtk:{{ .U.postgres_password }}@postgres:5432/dtk
+      - DTK_REDIS_URL=redis://:{{ .U.redis_password }}@redis:6379/0
+    depends_on:
+      - postgres
+  postgres:
+    image: docker.io/timescale/timescaledb-ha:pg17
+    environment:
+      - POSTGRES_DB=dtk
+      - POSTGRES_USER=dtk
+      - POSTGRES_PASSWORD={{ .U.postgres_password }}
+      - POSTGRES_HOST_AUTH_METHOD=scram-sha-256
+    binds:
+      - /lzcapp/var/douyin/postgres:/home/postgres/pgdata/data
+  redis:
+    image: docker.io/library/redis:8-alpine
+    command: [redis-server, --appendonly, 'yes', --requirepass, '{{ .U.redis_password }}']
+    binds:
+      - /lzcapp/var/douyin/redis:/data

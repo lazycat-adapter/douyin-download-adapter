@@ -1,0 +1,28 @@
+package: cloud.lazycat.app.download.douyin
+version: 5.1.13
+name: Douyin_TikTok_Download_API
+description: 高性能的抖音与 TikTok 数据 API，提供在线解析、管理控制台和可选下载能力。
+homepage: https://github.com/Evil0ctal/Douyin_TikTok_Download_API
+author: Evil0ctal
+license: Apache-2.0
+min_os_version: 1.6.0
+locales:
+  zh-CN:
+    name: Douyin_TikTok_Download_API
+    description: 高性能的抖音与 TikTok 数据 API，提供在线解析、管理控制台和可选下载能力。
+    usage: |
+      首次访问 API 控制台时按页面提示完成管理员初始化；
+      应用数据和数据库持久保存在 /lzcapp/var/douyin；
+      API、worker、PostgreSQL 和 Redis 均由应用编排管理，升级时请保留安装参数。
+  en-US:
+    name: Douyin_TikTok_Download_API
+    description: A high-performance Douyin and TikTok data API with a web console and optional downloader.
+    usage: |
+      Complete administrator setup from the first-run console;
+      Application data and databases persist under /lzcapp/var/douyin;
+      Keep the installation parameters unchanged across upgrades.
+permissions:
+  required:
+    - net.internet
+  optional:
+    - net.lan

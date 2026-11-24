@@ -1,0 +1,41 @@
+params:
+  - id: secret_key
+    type: string
+    name: DTK_SECRET_KEY
+    description: Douyin API 的主密钥，安装时自动生成。升级时请保留原值。
+    default_value: $random(len=64)
+    optional: false
+  - id: postgres_password
+    type: string
+    name: PostgreSQL 密码
+    description: 应用内部 PostgreSQL 密码，安装时自动生成。
+    default_value: $random(len=48)
+    optional: false
+  - id: redis_password
+    type: string
+    name: Redis 密码
+    description: 应用内部 Redis 密码，安装时自动生成。
+    default_value: $random(len=48)
+    optional: false
+
+locales:
+  zh:
+    secret_key:
+      name: API 主密钥
+      description: 用于加密身份和代理凭据，升级时保持不变。
+    postgres_password:
+      name: PostgreSQL 密码
+      description: 安装时自动生成。
+    redis_password:
+      name: Redis 密码
+      description: 安装时自动生成。
+  en:
+    secret_key:
+      name: API master key
+      description: Encrypts stored identities and proxy credentials. Keep it across upgrades.
+    postgres_password:
+      name: PostgreSQL password
+      description: Generated during installation.
+    redis_password:
+      name: Redis password
+      description: Generated during installation.
