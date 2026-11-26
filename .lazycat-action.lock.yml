@@ -6,7 +6,7 @@ source:
     revision: 50f89e8ba23c205e06bfeed78246daf81583276b
     tag: v5.1.13
 fingerprint: sha256:2160b638b2f5d9a1c55a89d173dd17b59a7effa6aff97627b97b0f84ad0ea010
-status: packaged
+status: submitted
 images:
     - id: douyin
       source_ref: docker.io/evil0ctal/douyin_tiktok_download_api:5.1.13@sha256:5891f816e6cf7814d9ca5c31b277a06988907a9b4ebc1ede62a7a65b3b046dc4
@@ -231,3 +231,18 @@ application:
 
         **Full changelog / 完整提交记录**: https://github.com/Evil0ctal/Douyin_TikTok_Download_API/compare/v5.1.12...v5.1.13
 packaged_at: 2026-11-26T03:59:07.358614033Z
+reviews:
+    - id: 23986
+      source:
+        kind: git
+        version: 5.1.13
+        ref: refs/tags/v5.1.13
+        revision: 50f89e8ba23c205e06bfeed78246daf81583276b
+        tag: v5.1.13
+      fingerprint: sha256:2160b638b2f5d9a1c55a89d173dd17b59a7effa6aff97627b97b0f84ad0ea010
+      application_version: 5.1.14
+      lpk_sha256: 0b0903a5f1b22ac7ce79dfe33d7125fa487afd2e5391a40ba4a31322054d5f1b
+      status: waiting
+      created_at: 2026-11-26T03:59:31.383Z
+      submitted_at: 2026-11-26T03:59:31.54081798Z
+      checked_at: 2026-11-26T03:59:31.540818651Z
