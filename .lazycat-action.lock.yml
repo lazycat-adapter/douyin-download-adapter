@@ -31,7 +31,7 @@ images:
 application:
     package: cloud.lazycat.app.download.douyin
     version: 5.1.14
-    lpk_sha256: 623086302fb562a7aeebc83f66bc38c958deda15a34959502bc13ff4eafd0b53
+    lpk_sha256: 0b0903a5f1b22ac7ce79dfe33d7125fa487afd2e5391a40ba4a31322054d5f1b
     changelog: |-
         Upstream 5.1.14
         ## What's new
@@ -230,4 +230,4 @@ application:
         **Images / 镜像**: `evil0ctal/douyin_tiktok_download_api` · `evil0ctal/douyin_tiktok_download_api-downloader` · `evil0ctal/douyin_tiktok_download_api-transcriber`
 
         **Full changelog / 完整提交记录**: https://github.com/Evil0ctal/Douyin_TikTok_Download_API/compare/v5.1.12...v5.1.13
-packaged_at: 2026-11-26T02:33:23.631122377Z
+packaged_at: 2026-11-26T03:59:07.358614033Z
