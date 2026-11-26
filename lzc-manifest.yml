@@ -14,7 +14,7 @@ services:
   douyin:
     # upstream: docker.io/evil0ctal/douyin_tiktok_download_api:5.1.13@sha256:5891f816e6cf7814d9ca5c31b277a06988907a9b4ebc1ede62a7a65b3b046dc4
     image: registry.lazycat.cloud/peter/evil0ctal/douyin_tiktok_download_api:b7473a0bc54ab796
-    command: [api]
+    command: api
     environment:
       - DTK_SECRET_KEY={{ .U.secret_key }}
       - DTK_DATABASE_URL=postgresql+asyncpg://dtk:{{ .U.postgres_password }}@postgres:5432/dtk
@@ -40,7 +40,7 @@ services:
   worker:
     # upstream: docker.io/evil0ctal/douyin_tiktok_download_api:5.1.13@sha256:5891f816e6cf7814d9ca5c31b277a06988907a9b4ebc1ede62a7a65b3b046dc4
     image: registry.lazycat.cloud/peter/evil0ctal/douyin_tiktok_download_api:b7473a0bc54ab796
-    command: [worker]
+    command: worker
     environment:
       - DTK_SECRET_KEY={{ .U.secret_key }}
       - DTK_DATABASE_URL=postgresql+asyncpg://dtk:{{ .U.postgres_password }}@postgres:5432/dtk
@@ -55,7 +55,7 @@ services:
   migrate:
     # upstream: docker.io/evil0ctal/douyin_tiktok_download_api:5.1.13@sha256:5891f816e6cf7814d9ca5c31b277a06988907a9b4ebc1ede62a7a65b3b046dc4
     image: registry.lazycat.cloud/peter/evil0ctal/douyin_tiktok_download_api:b7473a0bc54ab796
-    command: [migrate]
+    command: migrate
     environment:
       - DTK_SECRET_KEY={{ .U.secret_key }}
       - DTK_DATABASE_URL=postgresql+asyncpg://dtk:{{ .U.postgres_password }}@postgres:5432/dtk
@@ -75,6 +75,6 @@ services:
   redis:
     # upstream: docker.io/library/redis:8-alpine@sha256:bf33e63600ae8240c9f8b553c8fae427550dae17042bc24b06bbe06d3057c9bc
     image: registry.lazycat.cloud/peter/library/redis:e9288a1a402d65aa
-    command: [redis-server, --appendonly, 'yes', --requirepass, '{{ .U.redis_password }}']
+    command: redis-server --appendonly yes --requirepass '{{ .U.redis_password }}'
     binds:
       - /lzcapp/var/douyin/redis:/data

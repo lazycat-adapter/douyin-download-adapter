@@ -31,9 +31,13 @@ class DouyinContractTest(unittest.TestCase):
         self.assertIn("/lzcapp/var/douyin/media:/var/lib/dtk/media", services["douyin"]["binds"])
         self.assertIn("/lzcapp/var/douyin/postgres:/home/postgres/pgdata/data", services["postgres"]["binds"])
         self.assertIn("/lzcapp/var/douyin/redis:/data", services["redis"]["binds"])
-        self.assertEqual(services["douyin"]["command"], ["api"])
-        self.assertEqual(services["worker"]["command"], ["worker"])
-        self.assertEqual(services["migrate"]["command"], ["migrate"])
+        self.assertEqual(services["douyin"]["command"], "api")
+        self.assertEqual(services["worker"]["command"], "worker")
+        self.assertEqual(services["migrate"]["command"], "migrate")
+        self.assertEqual(
+            services["redis"]["command"],
+            "redis-server --appendonly yes --requirepass '{{ .U.redis_password }}'",
+        )
 
     def test_install_secrets_are_parameterized(self):
         params = {item["id"] for item in yaml.safe_load((ROOT / "lzc-deploy-params.yml").read_text())["params"]}
