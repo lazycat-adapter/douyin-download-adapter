@@ -1,5 +1,5 @@
 package: cloud.lazycat.app.download.douyin
-version: 5.1.13
+version: 5.1.14
 name: Douyin_TikTok_Download_API
 description: 高性能的抖音与 TikTok 数据 API，提供在线解析、管理控制台和可选下载能力。
 homepage: https://github.com/Evil0ctal/Douyin_TikTok_Download_API
